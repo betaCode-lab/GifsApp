@@ -1,0 +1,72 @@
+<div class="container vh-100">
+    <div class="row h-100 align-items-center">
+        <div class="col-12 d-flex flex-column align-items-center">
+            
+            <h2>Create Account</h2>
+            <form 
+                [formGroup]="createUserForm"
+                (submit)="createUser()"
+                class="w-50">
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">User name</label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        placeholder="Username"
+                        formControlName="username"
+                    >
+
+                    <div *ngIf="username?.invalid && (username?.dirty || username?.touched)">
+                        <p *ngIf="username?.errors?.['required']" class="text-danger">Username is required.</p>
+                        <p *ngIf="username?.errors?.['minlength']" class="text-danger">Username must be at least 3 characters long.</p>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Email address</label>
+                    <input 
+                        type="email" 
+                        class="form-control" 
+                        placeholder="Email"
+                        formControlName="email">
+
+                    <div *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+                        <p *ngIf="email?.errors?.['required']" class="text-danger">Email is required.</p>
+                        <p *ngIf="email?.errors?.['email']" class="text-danger">This is not a valid email.</p>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                    <input 
+                        type="password" 
+                        class="form-control"
+                        placeholder="Password"
+                        formControlName="password">
+
+                    <div *ngIf="password?.invalid && (password?.dirty || password?.touched)">
+                        <p *ngIf="password?.errors?.['required']" class="text-danger">Password is required.</p>
+                        <p *ngIf="password?.errors?.['minlength']" class="text-danger">Password must be at least 8 characters long.</p>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Confirm Password</label>
+                    <input 
+                        type="password" 
+                        class="form-control" 
+                        placeholder="Confirm Password"
+                        formControlName="confirmPassword">
+
+                    <div *ngIf="confirmPassword?.invalid && (confirmPassword?.dirty || confirmPassword?.touched)">
+                        <p *ngIf="confirmPassword?.errors?.['required']" class="text-danger">Confirm password is required.</p>
+                        <p *ngIf="confirmPassword?.errors?.['minlength']" class="text-danger">Confirm password must be at least 8 characters long.</p>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <a routerLink="/auth/login">You have an account? Log In</a>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Create Account</button>
+            </form>
+        </div>
+    </div>
+</div>

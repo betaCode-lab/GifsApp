@@ -1,0 +1,46 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            
+            <form 
+            [formGroup]="profileForm" 
+            (submit)="editProfile()"
+            class="w-50 mx-auto">
+
+                <h2 class="my-2">Profile</h2>
+            
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        placeholder="Username"
+                        formControlName="username">
+
+                    <div *ngIf="username?.invalid && (username?.dirty || username?.touched)">
+                        <p *ngIf="username?.errors?.['required']" class="text-danger">Username is required.</p>
+                        <p *ngIf="username?.errors?.['minlength']" class="text-danger">Username must be at least 3 characters long.</p>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Email address</label>
+                    <input 
+                        type="email" 
+                        class="form-control" 
+                        placeholder="Email"
+                        formControlName="email">
+
+                    <div *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+                        <p *ngIf="email?.errors?.['required']" class="text-danger">Email is required.</p>
+                        <p *ngIf="email?.errors?.['email']" class="text-danger">This is not a valid email.</p>
+                    </div>
+                </div>
+
+                <button class="btn btn-success me-3">Save Profile</button>
+            </form>
+
+            <button class="btn btn-danger" (click)="deleteAccount(id)">Delete Account</button>
+        </div>
+    </div>
+</div>
