@@ -1,8 +1,9 @@
-import { Routes } from '@angular/router';
-import { CreateUserPageComponent } from './auth/pages/create-user-page/create-user-page.component';
-import { loginGuard } from './gifs/guards/login.guard';
+import { authenticatedGuard } from './auth/guards/authenticated.guard';
+import { authPreventGuard } from './auth/guards/auth-prevent.guard';
+import { CreateAccountPageComponent } from './auth/pages/create-account-page/create-account-page.component';
 import { LayoutMainComponent } from './shared/layouts/layout-main/layout-main.component';
 import { LoginPageComponent } from './auth/pages/login-page/login-page.component';
+import { Routes } from '@angular/router';
 
 export const routes: Routes = [
     {
@@ -12,11 +13,13 @@ export const routes: Routes = [
             {
                 path: 'login',
                 component: LoginPageComponent,
+                canActivate: [authPreventGuard],
                 title: 'Login'
             },
             {
                 path: 'create',
-                component: CreateUserPageComponent,
+                component: CreateAccountPageComponent,
+                canActivate: [authPreventGuard],
                 title: 'Register'
             }
         ]
@@ -24,15 +27,22 @@ export const routes: Routes = [
     {
         path: 'gifs',
         component: LayoutMainComponent,
-        data: { showSidebar: true },
-        canActivate: [loginGuard],
+        canActivate: [authenticatedGuard],
+        data: { 
+            showSidebar: true,
+            showHistory: true
+        },
         loadChildren: () => import('./gifs/gifs.routes').then(r => r.GIFS_ROUTES)
     },
     {
-        path: 'user',
-        data: { showSideBar: true },
-        canActivate: [loginGuard],
-        loadChildren: () => import('./user/user.routes').then(r => r.USER_ROUTES)
+        path: 'account',
+        component: LayoutMainComponent,
+        canActivate: [authenticatedGuard],
+        data: { 
+            showSidebar: true,
+            showHistory: false
+        },
+        loadChildren: () => import('./account/account.routes').then(r => r.ACCOUNT_ROUTES)
     },
     {
         path: '',

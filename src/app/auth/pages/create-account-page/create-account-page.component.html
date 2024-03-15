@@ -1,0 +1,80 @@
+<div class="container" style="height: 100vh;">
+    <div class="row h-100">
+        <div class="col-12 d-flex flex-column justify-content-center align-items-center">
+            <h2>Create Account</h2>
+        
+            <form class="w-50" [formGroup]="createAccount" (submit)="create()">
+                <div class="mb-3">
+                  <label for="username" class="form-label">Username</label>
+                  <input 
+                    type="text" 
+                    class="form-control" 
+                    id="username" 
+                    aria-describedby="username" 
+                    placeholder="Username"
+                    formControlName="username">
+
+                    <!-- Validations -->
+                    @if(username?.invalid && (username?.dirty || username?.touched)) {
+                        <p *ngIf="username?.errors?.['required']" class="text-danger mt-2">Username is required</p>
+                        <p *ngIf="username?.errors?.['minlength']" class="text-danger mt-2">Username must be maximum 15 characters</p>
+                        <p *ngIf="username?.errors?.['maxlength']" class="text-danger mt-2">Username is too long</p>
+                    }
+                </div>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input 
+                    type="email" 
+                    class="form-control" 
+                    id="email" 
+                    aria-describedby="email" 
+                    placeholder="Email"
+                    formControlName="email">
+
+                    <!-- Validations -->
+                    @if(email?.invalid && (email?.dirty || email?.touched)) {
+                        <p *ngIf="email?.errors?.['required']" class="text-danger mt-2">Email is required</p>
+                        <p *ngIf="email?.errors?.['email']" class="text-danger mt-2">Email not valid</p>
+                    }
+                </div>
+                <div class="mb-3">
+                  <label for="password" class="form-label">Password</label>
+                  <input 
+                    type="password" 
+                    class="form-control" 
+                    id="password" 
+                    placeholder="Password"
+                    formControlName="password">
+
+                    <!-- Validations -->
+                    @if(password?.invalid && (password?.dirty || password?.touched)) {
+                        <p *ngIf="password?.errors?.['required']" class="text-danger mt-2">Password is required</p>
+                        <p *ngIf="password?.errors?.['minlength']" class="text-danger mt-2">Password must be minimum 8 characters</p>
+                    }
+                </div>
+                <div class="mb-3">
+                    <label for="confirm-password" class="form-label">Confirm Password</label>
+                    <input 
+                      type="password" 
+                      class="form-control" 
+                      id="confirm-password" 
+                      placeholder="Confirm Password"
+                      formControlName="confirmPassword">
+  
+                      <!-- Validations -->
+                      @if(confirmPassword?.invalid && (confirmPassword?.dirty || confirmPassword?.touched)) {
+                          <p *ngIf="confirmPassword?.errors?.['required']" class="text-danger mt-2">Confirm password is confirmed</p>
+                      }
+                  </div>
+
+                <div class="mb-2 d-flex justify-content-between">
+                    <a 
+                        routerLink="/auth/login"
+                        class="text-secondary">You have an account? Log In</a>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Create account</button>
+              </form>
+        </div>
+    </div>
+</div>

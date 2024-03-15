@@ -62,4 +62,8 @@ export class GifsService {
       })
   }
 
+  deleteTag(tag:string):void {
+    this._tagHistory = this._tagHistory.filter(oldTag => oldTag !== tag);
+    this.storeData();
+  }
 }

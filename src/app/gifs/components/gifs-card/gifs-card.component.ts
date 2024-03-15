@@ -9,7 +9,7 @@ import { LazyImageComponent } from '../../../shared/components/lazy-image/lazy-i
     LazyImageComponent
   ],
   templateUrl: './gifs-card.component.html',
-  styles: ``
+  styleUrl: './gifs-card.component.css'
 })
 export class GifsCardComponent {
   @Input()

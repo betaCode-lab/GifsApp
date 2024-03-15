@@ -1,10 +1,10 @@
 <div class="d-flex">
     @if(showSidebar) {
-        <shared-sidebar></shared-sidebar>
+        <shared-sidebar [showHistory]="showHistory"></shared-sidebar>
     }
   
-    <div class="flex-fill">
+    <main class="flex-fill">
         <router-outlet></router-outlet>
-    </div>
+    </main>
 </div>
   
