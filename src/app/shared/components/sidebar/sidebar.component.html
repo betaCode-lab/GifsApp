@@ -1,22 +1,32 @@
 <aside class="bg-dark border-right p-3 h-vh" id="sidebar">
-  <h3 class="text-light d-flex justify-content-between align-items-center">
-    GifsApp
+  <div class="text-light d-flex justify-content-between align-items-center">
+    <a
+      routerLink="/gifs/home"
+      class="fs-2 text-white fw-bold" 
+      style="text-decoration: none;">GifsApp</a>
 
-    <a routerLink="/user/profile">
+    <a routerLink="/account/profile">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6" style="width:20px;">
         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
       </svg>    
     </a>
-  </h3>
+  </div>
 
   <hr class="text-white">
 
-  <div class="list-group list-reset">
-    <button class="list-group-item list-group-item-action"
-      *ngFor="let tag of tags"
-      (click)="searchAgain(tag)"
-    >
-      {{ tag | titlecase}}
-    </button>
-  </div>
+  <button class="btn btn-primary mb-3" (click)="logout()">Log out</button>
+
+  @if(showHistory) {
+    <div class="list-group list-reset">
+      <button class="list-group-item list-group-item-action"
+        *ngFor="let tag of tags"
+        (click)="searchAgain(tag)"
+        (mouseover)="mouseOver(tag)"
+        (mouseleave)="mouseLeave()"
+        (keydown)="deleteSearch($event)"
+      >
+        {{ tag | titlecase}}
+      </button>
+    </div>
+  }
 </aside>

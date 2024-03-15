@@ -1,0 +1,53 @@
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-12">
+            <h2 class="text-center">Profile</h2>
+        
+            <form class="w-50 mx-auto" [formGroup]="profileForm">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="username" 
+                        aria-describedby="username"
+                        placeholder="Username"
+                        formControlName="username">
+
+                    <!-- Validations -->
+                    @if(username?.invalid && (username?.dirty || username?.touched)) {
+                        <p *ngIf="username?.errors?.['required']" class="text-danger mt-2">Username is required</p>
+                        <p *ngIf="username?.errors?.['minlength']" class="text-danger mt-2">Username must be maximum 15 characters</p>
+                        <p *ngIf="username?.errors?.['maxlength']" class="text-danger mt-2">Username is too long</p>
+                    }
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input 
+                        type="email" 
+                        class="form-control" 
+                        id="email" 
+                        aria-describedby="email"
+                        placeholder="Email"
+                        formControlName="email">
+
+                    <!-- Validations -->
+                    @if(email?.invalid && (email?.dirty || email?.touched)) {
+                        <p *ngIf="email?.errors?.['required']" class="text-danger mt-2">Email is required</p>
+                        <p *ngIf="email?.errors?.['email']" class="text-danger mt-2">Email not valid</p>
+                    }
+                </div>
+
+                <div class="mb-3">
+                    <a routerLink="/gifs/home" class="text-secondary link-offset-3">Go back home</a>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary" (click)="saveChanges()">Save Changes</button>
+                    <button type="button" class="btn btn-danger" (click)="deleteAccount()">Delete Account</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

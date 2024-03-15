@@ -1,33 +1,37 @@
-import { AuthService } from '../../services/auth.service';
+import { AuthenticateService } from '../../services/authenticate.service';
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-
-import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Login } from '../../../models/auth/login';
 import { Router, RouterLink } from '@angular/router';
+import { Token } from '@angular/compiler';
+import { TokenHandlerService } from '../../services/token-handler.service';
 import Swal from 'sweetalert2';
-import { TokenService } from '../../services/token.service';
 
 @Component({
-  selector: 'auth-login-page',
+  selector: 'app-login-page',
   standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
     RouterLink
   ],
-  templateUrl: './login-page.component.html'
+  templateUrl: './login-page.component.html',
+  styles: ``
 })
 export class LoginPageComponent {
+  private router: Router = inject(Router)
+  private authService: AuthenticateService = inject(AuthenticateService);
+  private tokenService: TokenHandlerService = inject(TokenHandlerService);
+  public jwtToken!:Token;
 
-  private router: Router = inject(Router);
-  private authService: AuthService = inject(AuthService);
-  private tokenService: TokenService = inject(TokenService);
-  
+  // Form
   public loginForm = new FormGroup({
     email: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required),
   });
 
+  // Getters
   get email() {
     return this.loginForm.get('email');
   }
@@ -36,29 +40,35 @@ export class LoginPageComponent {
     return this.loginForm.get('password');
   }
 
-  login(): void {
-
+  // Actions
+  login():void {
     if(this.loginForm.invalid) {
       Swal.fire({
-        title: 'Error!',
-        text: 'All fields are required',
-        icon: 'error'
+        icon: "error",
+        title: "Oops...",
+        text: "Both fields are required."
       });
 
       return;
     }
 
-    this.authService.login(this.email?.value!, this.password?.value!).subscribe({
-      next: (res) => {
-        this.tokenService.setToken(res.token);
-        this.router.navigate(['/gifs/home']);
+    // Create credentials
+    const credentials: Login = {
+      Email: this.email?.value!,
+      Password: this.password?.value!
+    }
+
+    // Make login
+    this.authService.login(credentials).subscribe({
+      next: (jwtToken) => {
+        this.tokenService.storeToken(jwtToken.token);
+        this.router.navigate(['gifs/home']);
       },
-      error: (err) => {
-        console.log(err);
+      error: (error) => {
         Swal.fire({
-          title: 'Error!',
-          text: err.error,
-          icon: 'error'
+          icon: "error",
+          title: "Oops...",
+          text: error
         });
       }
     });
