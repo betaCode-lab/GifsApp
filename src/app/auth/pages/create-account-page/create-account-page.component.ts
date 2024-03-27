@@ -79,7 +79,7 @@ export class CreateAccountPageComponent {
         Swal.fire({
           icon: "success",
           title: "Created",
-          text: "User created successfully"
+          text: "Account created successfully"
         });
 
         setTimeout(() => {

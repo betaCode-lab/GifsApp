@@ -4,6 +4,9 @@ import { CreateAccountPageComponent } from './auth/pages/create-account-page/cre
 import { LayoutMainComponent } from './shared/layouts/layout-main/layout-main.component';
 import { LoginPageComponent } from './auth/pages/login-page/login-page.component';
 import { Routes } from '@angular/router';
+import { ResetPasswordComponent } from './auth/pages/reset-password/reset-password.component';
+import { ChangePasswordComponent } from './auth/pages/change-password/change-password.component';
+import { tokenValidatorGuard } from './auth/guards/token-validator.guard';
 
 export const routes: Routes = [
     {
@@ -21,6 +24,21 @@ export const routes: Routes = [
                 component: CreateAccountPageComponent,
                 canActivate: [authPreventGuard],
                 title: 'Register'
+            },
+            {
+                path: 'reset-password',
+                component: ResetPasswordComponent,
+                canActivate: [authPreventGuard],
+                title: 'Reset Password'
+            },
+            {
+                path: 'change-password/:token',
+                component: ChangePasswordComponent,
+                canActivate: [
+                    authPreventGuard,
+                    tokenValidatorGuard
+                ],
+                title: 'Change Password'
             }
         ]
     },
